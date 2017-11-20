@@ -1,0 +1,145 @@
+---
+name: "LightBlueCompute Toolchain v1"
+description: "LightBlueCompute cloudnative application"
+version: 0.1
+required:
+ - deploy
+
+# Web IDE
+webide:
+  service_id: orion
+
+git-lightblue-web:
+  service_id: githubpublic
+  parameters:
+    repo_name: "lightblue-web-{{name}}"
+    repo_url: "https://github.com/ibm-cloud-academy/lightblue-web"
+    type: clone
+    has_issues: true
+
+git-lightblue-customer:
+  service_id: githubpublic
+  parameters:
+    repo_name: "lightblue-customer-{{name}}"
+    repo_url: "https://github.com/ibm-cloud-academy/lightblue-customer"
+    type: clone
+    has_issues: true
+
+git-lightblue-catalog:
+  service_id: githubpublic
+  parameters:
+    repo_name: "lightblue-catalog-{{name}}"
+    repo_url: "https://github.com/ibm-cloud-academy/lightblue-catalog"
+    type: clone
+    has_issues: true
+
+pipeline-lightblue-web:
+  service_id: pipeline
+  hidden: [form, description]
+  parameters:
+    name: "lightblue-web"
+    ui-pipeline: true
+    services: ["git-lightblue-web"]
+    configuration:
+      content: $file(lightblue-web.pipeline.yml)
+      env:
+       DOMAIN_US: "{{deploy.parameters.route-domain-us}}"
+       DOMAIN_EU: "{{deploy.parameters.route-domain-eu}}"
+       REPO: "git-bluecompute-web"
+       BRANCH: "{{deploy.parameters.repo-branch}}"
+       REGION_US: "{{deploy.parameters.deploy-region-us}}"
+       REGION_EU: "{{deploy.parameters.deploy-region-eu}}"
+       ORG: "{{deploy.parameters.deploy-org}}"
+       SPACE: "{{deploy.parameters.deploy-space}}"
+       NAME_US: "us-{{pipeline-bluecompute-web.parameters.name}}-{{deploy.parameters.deploy-space}}"
+       NAME_EU: "eu-{{pipeline-bluecompute-web.parameters.name}}-{{deploy.parameters.deploy-space}}"
+       ROUTE_HOSTNAME_BFF_WEB: "{{deploy.parameters.route-hostname-bff-web}}"
+       ROUTE_DOMAIN_BFF_WEB: "{{deploy.parameters.route-domain-bff-web}}"
+      execute: false
+
+pipeline-lightblue-customer:
+  service_id: pipeline
+  hidden: [form, description]
+  parameters:
+    name: "lightblue-customer"
+    ui-pipeline: true
+    services: ["git-lightblue-customer"]
+    configuration:
+      content: $file(lightblue-customer.pipeline.yml)
+      env:
+       DOMAIN_US: "{{deploy.parameters.route-domain-us}}"
+       DOMAIN_EU: "{{deploy.parameters.route-domain-eu}}"
+       REPO: "git-micro-customer"
+       BRANCH: "{{deploy.parameters.repo-branch}}"
+       REGION_US: "{{deploy.parameters.deploy-region-us}}"
+       REGION_EU: "{{deploy.parameters.deploy-region-eu}}"
+       ORG: "{{deploy.parameters.deploy-org}}"
+       SPACE: "{{deploy.parameters.deploy-space}}"
+       NAME_US: "us-{{pipeline-micro-customer.parameters.name}}-{{deploy.parameters.deploy-space}}"
+       NAME_EU: "eu-{{pipeline-micro-customer.parameters.name}}-{{deploy.parameters.deploy-space}}"
+       PORT: "8080"
+      execute: false
+
+pipeline-lightblue-catalog:
+  service_id: pipeline
+  hidden: [form, description]
+  parameters:
+    name: "lightblue-catalog"
+    ui-pipeline: true
+    services: ["git-lightblue-catalog"]
+    configuration:
+      content: $file(lightblue-catalog.pipeline.yml)
+      env:
+       DOMAIN_US: "{{deploy.parameters.route-domain-us}}"
+       DOMAIN_EU: "{{deploy.parameters.route-domain-eu}}"
+       REPO: "git-lightblue-catalog"
+       BRANCH: "{{deploy.parameters.repo-branch}}"
+       REGION_US: "{{deploy.parameters.deploy-region-us}}"
+       REGION_EU: "{{deploy.parameters.deploy-region-eu}}"
+       ORG: "{{deploy.parameters.deploy-org}}"
+       SPACE: "{{deploy.parameters.deploy-space}}"
+       NAME_US: "us-{{pipeline-micro-orders.parameters.name}}-{{deploy.parameters.deploy-space}}"
+       NAME_EU: "eu-{{pipeline-lightblue-catalog.parameters.name}}-{{deploy.parameters.deploy-space}}"
+       PORT: "9080,8080"
+       MYSQL_JDBC_URL_US: "jdbc:mysql://{{deploy.parameters.mysql-servers-us}}/{{deploy.parameters.orders-db}}"
+       MYSQL_JDBC_URL_EU: "jdbc:mysql://{{deploy.parameters.mysql-servers-eu}}/{{deploy.parameters.orders-db}}"
+       MYSQL_USER: "{{deploy.parameters.orders-dbuser}}"
+       MYSQL_PASSWORD: "{{deploy.parameters.orders-dbpass}}"
+      execute: false
+
+deploy:
+  schema: deploy.json
+  service-category: pipeline
+  parameters:
+    repo-branch: "{{branch}}"
+    deploy-org: "{{organization}}"
+    deploy-space: "{{space}}"
+    deploy-region-us: "ibm:yp:us-south"
+    deploy-region-eu: "ibm:yp:eu-gb"
+    route-domain-us: "mybluemix.net"
+    route-domain-eu: "eu-gb.mybluemix.net"
+    customer-gateway-ip-us: ""
+    customer-gateway-ip-eu: ""
+    customer-subnet-us: ""
+    customer-subnet-eu: ""
+    customer-psk: ""
+    mysql-servers-us: ""
+    mysql-servers-eu: ""
+    inventory-db: "inventorydb"
+    inventory-dbuser: "dbuser"
+    inventory-dbpass: "Pass4dbus3r"
+    orders-db: "ordersdb"
+    orders-dbuser: "orders_dbuser"
+    orders-dbpass: "Pass4ordersus3r"
+    apic-url-us: "us.apiconnect.ibmcloud.com"
+    apic-url-eu: "eu.apiconnect.ibmcloud.com"
+    ibmid-user: ""
+    ibmid-pass: ""
+    new-relic-lic-key: ""
+    shared-secret: ""
+    openwhisk-api-endpoint-us: "openwhisk.ng.bluemix.net"
+    openwhisk-api-endpoint-eu: "openwhisk.eu-gb.bluemix.net"
+    bxlogin-api-endpoint-us: "login.ng.bluemix.net"
+    bxlogin-api-endpoint-eu: "login.eu-gb.bluemix.net"
+    route-domain-bff-web: "case.com.akadns.net"
+    route-hostname-bff-web: "bluecompute"

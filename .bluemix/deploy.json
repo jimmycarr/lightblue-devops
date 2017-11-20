@@ -1,0 +1,161 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "LightBluecompute Toolchain Deployment to IBM Cloud",
+    "description": "lightbluecompute toolchain",
+    "longDescription": "Information entered here will be used at deployment time.",
+    "type": "object",
+    "properties": {
+        "repo-branch": {
+            "description": "Git repo branch",
+            "type": "string"
+        },
+        "deploy-org": {
+            "description": "Deploy to this Bluemix Organization",
+            "type": "string"
+        },
+        "deploy-space": {
+            "description": "Deploy to this space",
+            "type": "string"
+        },
+        "deploy-region-us": {
+            "description": "Deploy to this US region",
+            "type": "string"
+        },
+        "route-domain-us": {
+            "description": "US Route Domain",
+            "type": "string"
+        },
+        "customer-gateway-ip-us": {
+            "description": "Customer Gateway Address in US Region",
+            "type": "string"
+        },
+        "customer-subnet-us": {
+            "description": "Customer Subnet in US Region",
+            "type": "string"
+        },
+        "mysql-servers-us": {
+            "description": "MySQL Server Addresses <ip>:<port>[,<ip>:<port> ...] US-South",
+            "type": "string"
+        },
+        "inventory-db": {
+            "description": "Inventory database name",
+            "type": "string"
+        },
+        "inventory-dbuser": {
+            "description": "Inventory database user",
+            "type": "string"
+        },
+        "inventory-dbpass": {
+            "description": "Inventory database password",
+            "type": "password"
+        },
+        "orders-db": {
+            "description": "Orders database name",
+            "type": "string"
+        },
+        "ibmid-user": {
+            "description": "IBMid username",
+            "type": "string"
+        },
+        "ibmid-pass": {
+            "description": "IBMid password",
+            "type": "password"
+        },
+        "bxlogin-api-endpoint-us": {
+            "description": "Bluemix Login API Endpoint - US",
+            "type": "string"
+        }
+    },
+    "required": [
+        "repo-branch",
+        "deploy-org",
+        "deploy-space",
+        "ibmid-user",
+        "ibmid-pass",
+        "shared-secret",
+        "mysql-servers-us",
+        "inventory-db",
+        "inventory-dbuser",
+        "inventory-dbpass"
+        ],
+    "form": [
+        {
+            "type": "validator",
+            "url": "/devops/setup/bm-helper/helper.html"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Git repo branch",
+            "key": "repo-branch"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "IBMid Username",
+            "key": "ibmid-user"
+        },
+        {
+            "type": "password",
+            "readonly": false,
+            "title": "IBMid Password",
+            "key": "ibmid-pass"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "MySQL Server(s) in US <ip>:<port>[,<ip>:<port> ...]",
+            "key": "mysql-servers-us"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Inventory Database Name",
+            "key": "inventory-db"
+        },
+        {
+            "type": "text",
+            "readonly": false,
+            "title": "Inventory Database Username",
+            "key": "inventory-dbuser"
+        },
+        {
+            "type": "password",
+            "readonly": false,
+            "title": "Inventory Database Password",
+            "key": "inventory-dbpass"
+        },
+        {
+            "type": "table",
+            "columnCount": 3,
+            "widths": ["30%", "35%", "35%"],
+            "items": [
+                {
+                    "type": "label",
+                    "title": ""
+                },
+                {
+                    "type": "label",
+                    "title": "Organization"
+                },
+                {
+                    "type": "label",
+                    "title": "Space"
+                },
+                {
+                    "type": "label",
+                    "title": "Deploy to (in US-South and London)"
+                },
+                {
+                    "type": "select",
+                    "key": "deploy-org"
+                },
+                {
+                    "type": "select",
+                    "key": "deploy-space",
+                    "readonly": false
+                }
+            ]
+        }
+    ]
+}

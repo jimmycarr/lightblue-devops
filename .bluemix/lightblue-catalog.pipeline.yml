@@ -1,0 +1,100 @@
+---
+stages:
+- name: BUILD 
+  inputs:
+  - service: ${REPO}
+    type: git
+    branch: ${BRANCH}
+  triggers:
+  - type: commit
+  jobs:
+  - name: Build and Register Catalog Microservice Image
+    type: builder
+    extension_id: ibm.devops.services.pipeline.container.builder
+    target:
+      region_id: ${REGION_US}
+      organization: ${ORG}
+      space: ${SPACE}
+    IMAGE_NAME: ${NAME_US}
+    USE_CACHED_LAYERS: 'true'
+    COMMAND: |-
+        #!/bin/bash
+        # The following colors have been defined to help with presentation of logs: green, red, label_color, no_color.
+        log_and_echo "$LABEL" "Starting build script"
+
+        export JAVA_HOME=~/java8
+        set -x
+        cd catalog; ./gradlew build -x test
+        cd ..
+        pwd
+
+        ######################################################################################
+        # Copy any artifacts that will be needed for deployment and testing to $WORKSPACE    #
+        ######################################################################################
+        cp catalog/build/libs/*.jar $ARCHIVE_DIR/catalog.jar
+        cp catalog/manifest.yml $ARCHIVE_DIR/manifest.yml
+
+- name: DEPLOY
+  inputs:
+  - type: job
+    stage: BUILD US-South
+    job: Build and Register Catalog Microservice Image
+  triggers:
+  - type: stage
+  properties:
+  - name: APP_NAME
+    value: 'catalog-microservice'
+    type: text
+  - name: REGION
+    value: ${REGION_US}
+    type: text
+  - name: ROUTE_HOSTNAME
+    value: ${NAME_US}
+    type: text
+  - name: ROUTE_DOMAIN
+    value: ${DOMAIN_US}
+    type: text
+  - name: IGNORE_MAPPING_ROUTE
+    value: 'true'
+    type: text
+  - name: AUTO_RECOVERY
+    value: 'true'
+    type: text
+  - name: MEMORY
+    value: '256'
+    type: text
+  - name: CONTAINER_SIZE
+    value: '256'
+    type: text
+  - name: MIN_INSTANCES
+    value: '1'
+    type: text
+  - name: MAX_INSTANCES
+    value: '3'
+    type: text
+  - name: DESIRED_INSTANCES
+    value: '2'
+    type: text
+  - name: EUREKA_REGISTRY_URL
+    value: ${EUREKA_REGISTRY_URL_US}
+    type: text
+  - name: NEW_RELIC_LICENSE_KEY
+    value: ${NEW_RELIC_LICENSE}
+    type: text
+  jobs:
+  - name: Deploy Catalog Microservice Container Group
+    type: deployer
+    extension_id: ibm.devops.services.pipeline.docker.deploy.ice
+    target:
+      region_id: ${REGION_US}
+      organization: ${ORG}
+      space: ${SPACE}
+    PORT: ${PORT}
+
+    OPTIONAL_ARGS: -m ${MEMORY}
+    CONTAINER_NAME: ${NAME_US}
+    DEPLOY_TYPE: red_black
+    COMMAND: |-
+        #!/bin/sh
+
+        bx app push ${app_name} -n ${app_name}

@@ -9,20 +9,12 @@
             "description": "Deployment suffix",
             "type": "string"
         },
-        "repo-branch": {
-            "description": "Git repo branch",
-            "type": "string"
-        },
         "deploy-org": {
             "description": "Deploy to this Bluemix Organization",
             "type": "string"
         },
         "deploy-space": {
             "description": "Deploy to this space",
-            "type": "string"
-        },
-        "deploy-region-us": {
-            "description": "Deploy to this US region",
             "type": "string"
         },
         "mysql-servers-us": {
@@ -44,7 +36,6 @@
     },
     "required": [
         "suffix",
-        "repo-branch",
         "deploy-org",
         "deploy-space",
         "mysql-servers-us",
@@ -62,18 +53,6 @@
             "readonly": false,
             "title": "Git repo branch",
             "key": "repo-branch"
-        },
-        {
-            "type": "text",
-            "readonly": false,
-            "title": "IBMid Username",
-            "key": "ibmid-user"
-        },
-        {
-            "type": "password",
-            "readonly": false,
-            "title": "IBMid Password",
-            "key": "ibmid-pass"
         },
         {
             "type": "text",

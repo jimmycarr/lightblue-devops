@@ -52,7 +52,7 @@
             "type": "text",
             "readonly": false,
             "title": "Git repo branch",
-            "key": "repo-branch"
+            "key": "suffix"
         },
         {
             "type": "text",

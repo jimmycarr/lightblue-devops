@@ -5,6 +5,10 @@
     "longDescription": "Information entered here will be used at deployment time.",
     "type": "object",
     "properties": {
+        "suffix": {
+            "description": "Deployment suffix",
+            "type": "string"
+        },
         "repo-branch": {
             "description": "Git repo branch",
             "type": "string"
@@ -21,20 +25,8 @@
             "description": "Deploy to this US region",
             "type": "string"
         },
-        "route-domain-us": {
-            "description": "US Route Domain",
-            "type": "string"
-        },
-        "customer-gateway-ip-us": {
-            "description": "Customer Gateway Address in US Region",
-            "type": "string"
-        },
-        "customer-subnet-us": {
-            "description": "Customer Subnet in US Region",
-            "type": "string"
-        },
         "mysql-servers-us": {
-            "description": "MySQL Server Addresses <ip>:<port>[,<ip>:<port> ...] US-South",
+            "description": "MySQL Server Addresses <ip>:<port>",
             "type": "string"
         },
         "inventory-db": {
@@ -48,31 +40,13 @@
         "inventory-dbpass": {
             "description": "Inventory database password",
             "type": "password"
-        },
-        "orders-db": {
-            "description": "Orders database name",
-            "type": "string"
-        },
-        "ibmid-user": {
-            "description": "IBMid username",
-            "type": "string"
-        },
-        "ibmid-pass": {
-            "description": "IBMid password",
-            "type": "password"
-        },
-        "bxlogin-api-endpoint-us": {
-            "description": "Bluemix Login API Endpoint - US",
-            "type": "string"
         }
     },
     "required": [
+        "suffix",
         "repo-branch",
         "deploy-org",
         "deploy-space",
-        "ibmid-user",
-        "ibmid-pass",
-        "shared-secret",
         "mysql-servers-us",
         "inventory-db",
         "inventory-dbuser",
@@ -104,7 +78,7 @@
         {
             "type": "text",
             "readonly": false,
-            "title": "MySQL Server(s) in US <ip>:<port>[,<ip>:<port> ...]",
+            "title": "MySQL Server(s)",
             "key": "mysql-servers-us"
         },
         {
@@ -144,7 +118,7 @@
                 },
                 {
                     "type": "label",
-                    "title": "Deploy to (in US-South and London)"
+                    "title": "Deploy to"
                 },
                 {
                     "type": "select",

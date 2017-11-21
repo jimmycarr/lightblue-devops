@@ -18,6 +18,8 @@ stages:
       # To use Gradle {0}, uncomment the following line:
       #export PATH="$GRADLE2_HOME/bin:$PATH"
       gradle build -x test
+      cp build/libs/*.jar $ARCHIVE_DIR
+      cp manifest.yml $ARCHIVE_DIR
 - name: DEPLOY
   inputs:
   - type: job

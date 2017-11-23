@@ -16,7 +16,7 @@ stages:
       # The default Gradle version is {0}
       # To use Gradle {0}, uncomment the following line:
       #export PATH="$GRADLE2_HOME/bin:$PATH"
-      export JAVA_HOME=/opt/IBM/java8
+      export JAVA_HOME=$JAVA8_HOME
       gradle build -x test
 - name: DEPLOY
   inputs:
@@ -40,7 +40,7 @@ stages:
     PORT: ${PORT}
     COMMAND: |-
         #!/bin/bash
-        bx app push $APP_NAME -n $APP_NAME
+        cf push $APP_NAME -n $APP_NAME
 hooks:
 - enabled: true
   label: null

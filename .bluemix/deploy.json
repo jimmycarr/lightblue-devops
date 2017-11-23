@@ -51,7 +51,7 @@
         {
             "type": "text",
             "readonly": false,
-            "title": "Git repo branch",
+            "title": "Suffix",
             "key": "suffix"
         },
         {

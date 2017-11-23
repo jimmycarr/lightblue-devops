@@ -4,7 +4,7 @@ stages:
   inputs:
   - service: ${REPO}
     type: git
-    branch: ${BRANCH}
+    branch: initial-cf
   triggers:
   - type: commit
   jobs:
@@ -16,17 +16,15 @@ stages:
       # The default Gradle version is {0}
       # To use Gradle {0}, uncomment the following line:
       #export PATH="$GRADLE2_HOME/bin:$PATH"
+      export JAVA_HOME=/opt/IBM/java8
       gradle build -x test
 - name: DEPLOY
   inputs:
   - type: job
-    stage: BUILD
-    job: Register Customer Container Image
+    stage: DEPLOY
+    job: Deploy Customer Microservice application to IBM Cloud
   properties:
   - name: APP_NAME
-    value: "lightblue-customer-${SUFFIX}"
-    type: text
-  - name: ROUTE_HOSTNAME
     value: "lightblue-customer-${SUFFIX}"
     type: text
   triggers:
@@ -42,5 +40,10 @@ stages:
     PORT: ${PORT}
     COMMAND: |-
         #!/bin/bash
-        cf target -o $ORG -s $SPACE
-        cf push $APP_NAME -n $APP_NAME
+        bx app push $APP_NAME -n $APP_NAME
+hooks:
+- enabled: true
+  label: null
+  ssl_enabled: false
+  url: https://devops-api.ng.bluemix.net/v1/messaging/webhook/publish
+

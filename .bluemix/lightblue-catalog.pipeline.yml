@@ -4,11 +4,11 @@ stages:
   inputs:
   - service: ${REPO}
     type: git
-    branch: ${BRANCH}
+    branch: initial-cf
   triggers:
   - type: commit
   jobs:
-  - name: Build and Register Catalog Microservice Image
+  - name: Build Catalog Microservice jar file
     type: builder
     artifact_dir: ''
     build_type: gradle
@@ -18,13 +18,11 @@ stages:
       # To use Gradle {0}, uncomment the following line:
       #export PATH="$GRADLE2_HOME/bin:$PATH"
       gradle build -x test
-      cp build/libs/*.jar $ARCHIVE_DIR
-      cp manifest.yml $ARCHIVE_DIR
 - name: DEPLOY
   inputs:
   - type: job
-    stage: BUILD
-    job: Build and Register Catalog Microservice Image
+    stage: DEPLOY
+    job: Deploy Catalog Microservice application to IBM Cloud
   triggers:
   - type: stage
   properties:

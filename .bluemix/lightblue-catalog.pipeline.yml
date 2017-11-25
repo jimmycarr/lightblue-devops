@@ -27,6 +27,9 @@ stages:
   triggers:
   - type: stage
   properties:
+  - name: SUFFIX
+    value: ${SUFFIX}
+    type: text
   - name: APP_NAME
     value: lightblue-catalog-${SUFFIX}
     type: text
@@ -42,6 +45,7 @@ stages:
     SUFFIX: ${SUFFIX}
     COMMAND: |-
         #!/bin/sh
+        echo "Deploying $APP_NAME using $SUFFIX"
         cf push ${APP_NAME} -n ${APP_NAME}
 hooks:
 - enabled: true

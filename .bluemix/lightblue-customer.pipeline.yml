@@ -24,8 +24,11 @@ stages:
     stage: DEPLOY
     job: Deploy Customer Microservice application to IBM Cloud
   properties:
+  - name: SUFFIX
+    value: ${SUFFIX}
+    type: text
   - name: APP_NAME
-    value: "lightblue-customer-${SUFFIX}"
+    value: lightblue-customer-${SUFFIX}
     type: text
   triggers:
   - type: stage
@@ -38,6 +41,7 @@ stages:
       space: ${SPACE}
       application: ${APP_NAME}
     PORT: ${PORT}
+    SUFFIX: ${SUFFIX}
     COMMAND: |-
         #!/bin/bash
         cf push $APP_NAME -n $APP_NAME

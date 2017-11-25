@@ -44,7 +44,7 @@ pipeline-lightblue-web:
       content: $file(lightblue-web.pipeline.yml)
       env:
        SUFFIX: "{{deploy.parameters.suffix}}"
-       REPO: "git-bluecompute-web"
+       REPO: "git-lightblue-web"
        ORG: "{{deploy.parameters.deploy-org}}"
        SPACE: "{{deploy.parameters.deploy-space}}"
       execute: false
@@ -60,7 +60,7 @@ pipeline-lightblue-customer:
       content: $file(lightblue-customer.pipeline.yml)
       env:
        SUFFIX: "{{deploy.parameters.suffix}}"
-       REPO: "git-micro-customer"
+       REPO: "git-lightblue-customer"
        ORG: "{{deploy.parameters.deploy-org}}"
        SPACE: "{{deploy.parameters.deploy-space}}"
        PORT: "8080"

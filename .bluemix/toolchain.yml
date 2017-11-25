@@ -90,11 +90,11 @@ deploy:
   schema: deploy.json
   service-category: pipeline
   parameters:
-    suffix: "{{suffix}}"
+    suffix: "vbudiusibmcom"
     deploy-org: "{{organization}}"
     deploy-space: "{{space}}"
     deploy-region-us: "ibm:yp:us-south"
-    mysql-servers-us: ""
+    mysql-servers-us: "9.1.2.3:5674"
     inventory-db: "inventorydb"
     inventory-dbuser: "dbuser"
     inventory-dbpass: "Pass4dbus3r"

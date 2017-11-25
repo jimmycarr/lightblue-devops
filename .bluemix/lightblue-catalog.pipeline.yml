@@ -28,7 +28,7 @@ stages:
   - type: stage
   properties:
   - name: APP_NAME
-    value: 'lightblue-catalog-${SUFFIX}'
+    value: lightblue-catalog-${SUFFIX}
     type: text
   jobs:
   - name: Deploy Catalog Microservice

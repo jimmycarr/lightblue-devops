@@ -7,33 +7,17 @@ stages:
     branch: initial-cf
   triggers:
   - type: commit
+  properties:
+  - name: SUFFIX
+    value: ${SUFFIX}
+    type: text
   jobs:
   - name: Build LightBlueCompute Webapp
     type: builder
-    build_type: npm
     script: |-
         #!/bin/bash
-        # The default Node.js version is 0.10.40
-        # To use Node.js 0.12.7, uncomment the following line:
-        export PATH=/opt/IBM/node-v0.12/bin:$PATH
-        # To use Node.js 4.2.2, uncomment the following line:
-        #export PATH=/opt/IBM/node-v4.2/bin:$PATH
-        npm install newrelic --save
-        cp node_modules/newrelic/newrelic.js ./
-
-        if [ ! -f ./jq ]; then
-           wget https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64
-           mv jq-linux64 jq
-           chmod u+x jq
-        fi
-
-        cat config/default.json | grep -v '^[ ]*//' | \
-            ./jq '.Application.local_mode=false' | \
-            ./jq '.Application.ObjectStorage.container="bluecompute"' \
-            > config/default.json.new
-        mv config/default.json.new config/default.json
-
-        npm install
+        # Configure config/default.json to include SUFFIX
+        echo "Modify configurations"
 
 - name: DEPLOY
   inputs:
@@ -43,11 +27,14 @@ stages:
   triggers:
   - type: stage
   properties:
+  - name: SUFFIX
+    value: ${SUFFIX}
+    type: text
   - name: APP_NAME
     value: lightblue-web-${SUFFIX}
     type: text
   jobs:
-  - name: Deploy BlueCompute Webapp
+  - name: Deploy LightBlueCompute Webapp
     type: deployer
     target:
       region_id: ibm:yp:US-South
@@ -56,4 +43,4 @@ stages:
       application: ${APP_NAME}
     script: |
         #!/bin/bash
-        bx app push $APP_NAME -n $APP_NAME
+        cf push $APP_NAME -n $APP_NAME

@@ -43,7 +43,7 @@ stages:
       space: ${SPACE}
     PORT: ${PORT}
     SUFFIX: ${SUFFIX}
-    COMMAND: |-
+    script: |-
         #!/bin/sh
         echo "Deploying $APP_NAME using $SUFFIX"
         cf push ${APP_NAME} -n ${APP_NAME}

@@ -42,7 +42,7 @@ stages:
       application: ${APP_NAME}
     PORT: ${PORT}
     SUFFIX: ${SUFFIX}
-    COMMAND: |-
+    script: |-
         #!/bin/bash
         cf push $APP_NAME -n $APP_NAME
 hooks:

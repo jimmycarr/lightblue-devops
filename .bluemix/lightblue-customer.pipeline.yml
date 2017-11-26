@@ -21,8 +21,8 @@ stages:
 - name: DEPLOY
   inputs:
   - type: job
-    stage: DEPLOY
-    job: Deploy Customer Microservice application to IBM Cloud
+    stage: BUILD
+    job: Gradle build application
   properties:
   - name: SUFFIX
     value: ${SUFFIX}

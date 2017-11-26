@@ -22,8 +22,8 @@ stages:
 - name: DEPLOY
   inputs:
   - type: job
-    stage: DEPLOY
-    job: Deploy Catalog Microservice application to IBM Cloud
+    stage: BUILD
+    job: Build Catalog Microservice jar file
   triggers:
   - type: stage
   properties:

@@ -38,7 +38,7 @@ stages:
     type: deployer
     deploy_permission: DEV_IN_SPACE
     target:
-      region_id: ibm:yp:US-South
+      region_id: ibm:yp:us-south
       organization: ${ORG}
       space: ${SPACE}
       application: ${APP_NAME}

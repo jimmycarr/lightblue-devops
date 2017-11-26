@@ -17,8 +17,7 @@ stages:
     script: |-
         #!/bin/bash
         # Configure config/default.json to include SUFFIX
-        echo "Modify configurations"
-
+        echo "Modify configurations for $SUFFIX"
 - name: DEPLOY
   inputs:
   - type: job

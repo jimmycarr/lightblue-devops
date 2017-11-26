@@ -14,7 +14,7 @@ stages:
   jobs:
   - name: Build LightBlueCompute Webapp
     type: builder
-    build_type: simple
+    build_type: shell
     script: |-
         #!/bin/bash
         # Configure config/default.json to include SUFFIX
@@ -36,14 +36,15 @@ stages:
   jobs:
   - name: Deploy LightBlueCompute Webapp
     type: deployer
+    deploy_permission: DEV_IN_SPACE
     target:
       region_id: ibm:yp:US-South
       organization: ${ORG}
       space: ${SPACE}
       application: ${APP_NAME}
     script: |
-        #!/bin/bash
-        cf push $APP_NAME -n $APP_NAME
+      #!/bin/bash
+      cf push $APP_NAME -n $APP_NAME
 hooks:
 - enabled: true
   label: null

@@ -16,32 +16,12 @@
         "deploy-space": {
             "description": "Deploy to this space",
             "type": "string"
-        },
-        "mysql-servers-us": {
-            "description": "MySQL Server Addresses <ip>:<port>",
-            "type": "string"
-        },
-        "inventory-db": {
-            "description": "Inventory database name",
-            "type": "string"
-        },
-        "inventory-dbuser": {
-            "description": "Inventory database user",
-            "type": "string"
-        },
-        "inventory-dbpass": {
-            "description": "Inventory database password",
-            "type": "password"
         }
     },
     "required": [
         "suffix",
         "deploy-org",
-        "deploy-space",
-        "mysql-servers-us",
-        "inventory-db",
-        "inventory-dbuser",
-        "inventory-dbpass"
+        "deploy-space"
         ],
     "form": [
         {
@@ -53,30 +33,6 @@
             "readonly": false,
             "title": "Suffix",
             "key": "suffix"
-        },
-        {
-            "type": "text",
-            "readonly": false,
-            "title": "MySQL Server(s)",
-            "key": "mysql-servers-us"
-        },
-        {
-            "type": "text",
-            "readonly": false,
-            "title": "Inventory Database Name",
-            "key": "inventory-db"
-        },
-        {
-            "type": "text",
-            "readonly": false,
-            "title": "Inventory Database Username",
-            "key": "inventory-dbuser"
-        },
-        {
-            "type": "password",
-            "readonly": false,
-            "title": "Inventory Database Password",
-            "key": "inventory-dbpass"
         },
         {
             "type": "table",

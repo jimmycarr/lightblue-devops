@@ -90,7 +90,7 @@ deploy:
   schema: deploy.json
   service-category: pipeline
   parameters:
-    suffix: "vbudiusibmcom"
+    suffix: ""
     deploy-org: "{{organization}}"
     deploy-space: "{{space}}"
     deploy-region-us: "ibm:yp:us-south"

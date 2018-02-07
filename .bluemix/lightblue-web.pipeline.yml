@@ -38,7 +38,7 @@ stages:
     type: deployer
     deploy_permission: DEV_IN_SPACE
     target:
-      region_id: ibm:yp:us-south
+      region_id: ibm:yp:eu-gb
       organization: ${ORG}
       space: ${SPACE}
       application: ${APP_NAME}
@@ -49,5 +49,5 @@ hooks:
 - enabled: true
   label: null
   ssl_enabled: false
-  url: https://devops-api.ng.bluemix.net/v1/messaging/webhook/publish
+  url: https://devops-api.eu-gb.bluemix.net/v1/messaging/webhook/publish
 
